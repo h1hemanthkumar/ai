@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, request
-from google import genai
+from flask import Flask, jsonify
+import generativeai as genai
 import os
 
 app = Flask(__name__)
 
-# Get API key from environment variable for security
+# Get Gemini API key from environment variable
 API_KEY = os.environ.get("GENIE_API_KEY")
 if not API_KEY:
     raise ValueError("Please set the GENIE_API_KEY environment variable!")
@@ -18,7 +18,6 @@ STATIC_PROMPT = "Write a short poem about AI and humans."
 @app.route("/generate", methods=["GET"])
 def generate_content():
     try:
-        # Call Gemini
         response = client.models.generate_content(
             model="gemini-2.5-pro",
             contents=STATIC_PROMPT
